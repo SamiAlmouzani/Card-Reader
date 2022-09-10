@@ -74,9 +74,11 @@ public class MySQLAccess {
             // Statements allow to issue SQL queries to the database
             statement = connect.createStatement();
             // Result set get the result of the SQL query
-            resultSet = statement.executeQuery("select * from timestamps");
+            resultSet = statement.executeQuery("select usr.idUser, usr.name, ts.time_in, ts.time_out, usr.role, usr.status\n" +
+                                                    "from\n" +
+                                                    "User usr natural join timestamps ts");
             while(resultSet.next()){
-                data.add(new TimeStamp(Integer.toString(resultSet.getInt(1)), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), Integer.toString(resultSet.getInt(5))));
+                data.add(new TimeStamp(Integer.toString(resultSet.getInt(1)), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), Integer.toString(resultSet.getInt(6))));
             }
         } catch (Exception e) {
             throw e;
@@ -84,37 +86,6 @@ public class MySQLAccess {
             close();
         }
         return data;
-    }
-    private void writeMetaData(ResultSet resultSet) throws SQLException {
-        //  Now get some metadata from the database
-        // Result set get the result of the SQL query
-
-        System.out.println("The columns in the table are: ");
-
-        System.out.println("Table: " + resultSet.getMetaData().getTableName(1));
-        for  (int i = 1; i<= resultSet.getMetaData().getColumnCount(); i++){
-            System.out.println("Column " +i  + " "+ resultSet.getMetaData().getColumnName(i));
-        }
-    }
-
-    private void writeResultSet(ResultSet resultSet) throws SQLException {
-        // ResultSet is initially before the first data set
-        while (resultSet.next()) {
-            // It is possible to get the columns via name
-            // also possible to get the columns via the column number
-            // which starts at 1
-            // e.g. resultSet.getSTring(2);
-            String user = resultSet.getString("myuser");
-            String website = resultSet.getString("webpage");
-            String summary = resultSet.getString("summary");
-            Date date = resultSet.getDate("datum");
-            String comment = resultSet.getString("comments");
-            System.out.println("User: " + user);
-            System.out.println("Website: " + website);
-            System.out.println("summary: " + summary);
-            System.out.println("Date: " + date);
-            System.out.println("Comment: " + comment);
-        }
     }
 
     // You need to close the resultSet

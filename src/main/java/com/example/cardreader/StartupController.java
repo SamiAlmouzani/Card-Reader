@@ -28,6 +28,8 @@ public class StartupController {
     @FXML
     TableColumn<TimeStamp, String> colUser;
     @FXML
+    TableColumn<TimeStamp, String> colName;
+    @FXML
     TableColumn<TimeStamp, String> colStatus;
     @FXML
     TableColumn<TimeStamp, String> colRole;
@@ -69,18 +71,28 @@ public class StartupController {
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+
+        }
+
+    }
+    @FXML
+    protected void onFilterButtonClick(){
+
+    }
+    @FXML
+    protected void onLoadUsersButtonClick(ActionEvent event) throws Exception {
             // execute query
             data = db.retrieveData(data);
             timeStampTableView.getColumns().clear();
             colUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
+            colName.setCellValueFactory(new PropertyValueFactory<>("name"));
             colTimeIn.setCellValueFactory(new PropertyValueFactory<>("time_in"));
             colTimeOut.setCellValueFactory(new PropertyValueFactory<>("time_out"));
             colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
             colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
             timeStampTableView.setItems(data);
-            timeStampTableView.getColumns().addAll(colUser, colTimeIn, colTimeOut, colRole, colStatus);
+            timeStampTableView.getColumns().addAll(colUser, colName, colTimeIn, colTimeOut, colRole, colStatus);
 
-        }
     }
 }
