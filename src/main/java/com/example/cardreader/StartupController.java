@@ -1,8 +1,6 @@
 package com.example.cardreader;
 
-import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,12 +13,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 
 public class StartupController {
     @FXML
     private TextField tfUserId;
+    @FXML
+    private TextField txtFilterInput;
     @FXML
     private Label lblInvalidUser;
     @FXML
@@ -76,14 +77,66 @@ public class StartupController {
 
     }
     @FXML
-    protected void onFilterButtonClick(){
+    protected void onFilterTimeButtonClick() throws SQLException, ClassNotFoundException {
+
+        timeStampTableView.getItems().clear();
+        data = db.filterTime(data, txtFilterInput.getText());
+        timeStampTableView.getColumns().clear();
+
+        colUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colTimeIn.setCellValueFactory(new PropertyValueFactory<>("time_in"));
+        colTimeOut.setCellValueFactory(new PropertyValueFactory<>("time_out"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        timeStampTableView.setItems(data);
+        timeStampTableView.getColumns().addAll(colUser, colName, colTimeIn, colTimeOut, colRole, colStatus);
+
+    }
+    @FXML
+    protected void onFilterDateButtonClick() throws SQLException, ClassNotFoundException {
+
+        timeStampTableView.getItems().clear();
+        data = db.filterDate(data, txtFilterInput.getText());
+        timeStampTableView.getColumns().clear();
+
+        colUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colTimeIn.setCellValueFactory(new PropertyValueFactory<>("time_in"));
+        colTimeOut.setCellValueFactory(new PropertyValueFactory<>("time_out"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        timeStampTableView.setItems(data);
+        timeStampTableView.getColumns().addAll(colUser, colName, colTimeIn, colTimeOut, colRole, colStatus);
+
+    }
+    @FXML
+    protected void onFilterIdButtonClick() throws SQLException, ClassNotFoundException {
+
+        timeStampTableView.getItems().clear();
+        data = db.filterIdData(data, Integer.parseInt(txtFilterInput.getText()));
+        timeStampTableView.getColumns().clear();
+        timeStampTableView.refresh();
+        colUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colTimeIn.setCellValueFactory(new PropertyValueFactory<>("time_in"));
+        colTimeOut.setCellValueFactory(new PropertyValueFactory<>("time_out"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        timeStampTableView.setItems(data);
+        timeStampTableView.getColumns().addAll(colUser, colName, colTimeIn, colTimeOut, colRole, colStatus);
 
     }
     @FXML
     protected void onLoadUsersButtonClick(ActionEvent event) throws Exception {
             // execute query
+            timeStampTableView.getItems().clear();
             data = db.retrieveData(data);
             timeStampTableView.getColumns().clear();
+
             colUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
             colName.setCellValueFactory(new PropertyValueFactory<>("name"));
             colTimeIn.setCellValueFactory(new PropertyValueFactory<>("time_in"));

@@ -4,12 +4,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="681.0" prefWidth="912.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.cardreader.StartupController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="681.0" prefWidth="912.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cardreader.StartupController">
    <children>
-      <TableView fx:id="timeStampTableView" layoutX="165.0" layoutY="187.0" prefHeight="441.0" prefWidth="645.0">
+      <TableView fx:id="timeStampTableView" layoutX="138.0" layoutY="141.0" prefHeight="441.0" prefWidth="645.0">
         <columns>
           <TableColumn fx:id="colUser" prefWidth="60.0" text="User" />
             <TableColumn fx:id="colName" prefWidth="139.0" text="Name" />
@@ -19,12 +20,15 @@
             <TableColumn fx:id="colStatus" prefWidth="48.0" text="Status" />
         </columns>
       </TableView>
-      <Label layoutX="369.0" layoutY="34.0" prefHeight="29.0" prefWidth="151.0" text="Student Viewer">
+      <Label layoutX="409.0" layoutY="32.0" prefHeight="29.0" prefWidth="151.0" text="Student Viewer">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="btnLoadUsers" layoutX="107.0" layoutY="105.0" mnemonicParsing="false" onAction="#onLoadUsersButtonClick" prefHeight="43.0" prefWidth="128.0" text="Load Users" />
-      <Button fx:id="btnFilter" layoutX="671.0" layoutY="99.0" mnemonicParsing="false" onAction="#onFilterButtonClick" prefHeight="43.0" prefWidth="128.0" text="Filter" />
+      <Button fx:id="btnLoadUsers" layoutX="398.0" layoutY="599.0" mnemonicParsing="false" onAction="#onLoadUsersButtonClick" prefHeight="43.0" prefWidth="128.0" text="Load All Times" />
+      <Button fx:id="btnFilterByDate" layoutX="419.0" layoutY="103.0" mnemonicParsing="false" onAction="#onFilterDateButtonClick" prefHeight="26.0" prefWidth="92.0" text="Filter By Date" />
+      <Button fx:id="btnFilterByTime" layoutX="530.0" layoutY="103.0" mnemonicParsing="false" onAction="#onFilterTimeButtonClick" prefHeight="26.0" prefWidth="97.0" text="Filter By Time" />
+      <Button fx:id="btnFilterById" layoutX="303.0" layoutY="103.0" mnemonicParsing="false" onAction="#onFilterIdButtonClick" prefHeight="19.0" prefWidth="90.0" text="Filter By Id" />
+      <TextField fx:id="txtFilterInput" layoutX="386.0" layoutY="68.0" />
    </children>
 </Pane>

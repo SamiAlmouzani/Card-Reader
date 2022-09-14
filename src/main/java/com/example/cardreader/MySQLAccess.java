@@ -88,6 +88,85 @@ public class MySQLAccess {
         return data;
     }
 
+    public ObservableList<TimeStamp> filterDate(ObservableList<TimeStamp> data, String date) throws SQLException, ClassNotFoundException {
+        try {
+            // This will load the MySQL driver, each DB has its own driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Setup the connection with the DB
+            connect = DriverManager
+                    .getConnection(URL, username, password);
+
+            // Statements allow to issue SQL queries to the database
+            statement = connect.createStatement();
+            System.out.println("select usr.idUser, usr.name, ts.time_in, ts.time_out, usr.role, usr.status\n" +
+                    "from\n" +
+                    "User usr natural join timestamps ts\n" +
+                    "where ts.time_in >= '" + date + "' 01:22:11'");
+            // Result set get the result of the SQL query
+            resultSet = statement.executeQuery("select usr.idUser, usr.name, ts.time_in, ts.time_out, usr.role, usr.status\n" +
+                    "from\n" +
+                    "User usr natural join timestamps ts\n" +
+                    "where ts.time_in >= '" + date + " 01:22:11'");
+            while(resultSet.next()){
+                data.add(new TimeStamp(Integer.toString(resultSet.getInt(1)), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), Integer.toString(resultSet.getInt(6))));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            close();
+        }
+        return data;
+    }
+    public ObservableList<TimeStamp> filterTime(ObservableList<TimeStamp> data, String time) throws SQLException, ClassNotFoundException {
+        try {
+            // This will load the MySQL driver, each DB has its own driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Setup the connection with the DB
+            connect = DriverManager
+                    .getConnection(URL, username, password);
+
+            // Statements allow to issue SQL queries to the database
+            statement = connect.createStatement();
+            // Result set get the result of the SQL query
+            resultSet = statement.executeQuery("select usr.idUser, usr.name, ts.time_in, ts.time_out, usr.role, usr.status\n" +
+                    "from\n" +
+                    "User usr natural join timestamps ts\n" +
+                    "where ts.time_in >= '2001-01-01 " + time + "'");
+            while(resultSet.next()){
+                data.add(new TimeStamp(Integer.toString(resultSet.getInt(1)), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), Integer.toString(resultSet.getInt(6))));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            close();
+        }
+        return data;
+    }
+    public ObservableList<TimeStamp> filterIdData(ObservableList<TimeStamp> data, int id) throws SQLException, ClassNotFoundException {
+        try {
+            // This will load the MySQL driver, each DB has its own driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Setup the connection with the DB
+            connect = DriverManager
+                    .getConnection(URL, username, password);
+
+            // Statements allow to issue SQL queries to the database
+            statement = connect.createStatement();
+            // Result set get the result of the SQL query
+            resultSet = statement.executeQuery("select usr.idUser, usr.name, ts.time_in, ts.time_out, usr.role, usr.status\n" +
+                    "from\n" +
+                    "User usr natural join timestamps ts\n" +
+                    "where ts.idUser='" + id + "'");
+            while(resultSet.next()){
+                data.add(new TimeStamp(Integer.toString(resultSet.getInt(1)), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), Integer.toString(resultSet.getInt(6))));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            close();
+        }
+        return data;
+    }
     // You need to close the resultSet
     private void close() {
         try {
